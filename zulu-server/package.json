@@ -1,0 +1,17 @@
+{
+  "name": "zuluserver",
+  "version": "1.0.0",
+  "description": "server component",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "zulu"
+  ],
+  "author": "Asanka Dayaratne",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
