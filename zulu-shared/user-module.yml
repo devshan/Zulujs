@@ -1,0 +1,106 @@
+module:
+    name: user
+    entry_point: UserService
+
+#---------------------db---------------------------------
+storage:
+    type: mysql
+    database: ZuluDB
+
+#---------------------action definitions-------------------------------------------------------
+
+ACTION CREATE_GROUP:
+    input:
+        name: string
+        shortName: string
+        type: string
+        address: string
+        parent: integer
+    output:
+        group: GROUP
+
+ACTION MODIFY_GROUP:
+    input:
+        groupID: integer
+        name: string
+        shortName: string
+        type: string
+        address: string
+        parent: integer
+    output:
+        group: GROUP
+
+ACTION QUERY_GROUPS:
+    input:
+        filter:
+            groupID: integer
+            name: string
+            shortName: string
+            type: string
+            address: string
+            parent: integer
+        sort:
+            by: [name, shortName, type, address]
+            order: [asc, desc]
+        include: [parent]
+        pageSize: integer
+        page: integer
+#----------------------------entity definitions--------------------------------------------------
+
+ENTITY GROUP:
+    name: 
+        singular: 'group'
+        plural: 'groups'
+    label:
+        singular: 'Group'
+        plural: 'Groups'
+    primaryKey: groupID
+    fields:
+        groupID:
+            type: integer
+            required: true
+            unique: true
+            auto: true
+            readonly: true
+        name:
+            type: string
+            length: [0,100]
+            required: true
+            unique: true
+            pattern: 
+                - ^[A-Za-z0-9]+$
+                - i
+            label: 'Group Title'
+            placeholder: 'Give a group name'
+        shortName:
+            type: string
+            length: [0,30]
+            required: true
+            unique: true
+            pattern: 
+                - ^[A-Za-z0-9]+$
+                - i
+            label: 'Group Short Name'
+            placeholder: 'Give a shortname for group'
+        type:
+            type: enum
+            label: 'Group Type'
+            values:
+                company: Company
+                branch: Branch
+                division: Division
+                team: Team
+                project: Project
+            default: company
+        address:
+            type: string
+            length: [0,100]
+            pattern: 
+                - ^[A-Za-z0-9]+$
+                - i
+            label: 'Address'
+            placeholder: 'Give an address'
+        parent:
+            type: integer
+            label: 'Parent Group'
+  
