@@ -1,11 +1,13 @@
-module:
+MODULE:
     name: user
     entry_point: UserService
 
 #---------------------db---------------------------------
-storage:
+DATABASE:
     type: mysql
     database: ZuluDB
+    user: root
+    password: pass
 
 #---------------------action definitions-------------------------------------------------------
 
