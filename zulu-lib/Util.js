@@ -30,6 +30,7 @@ module.exports = {
 		    		}
 					return NaN;		   
 		    	break;
+		    	
 		    default:
                 	return value;
                 break;
