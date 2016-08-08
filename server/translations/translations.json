@@ -1,15 +1,13 @@
  {
-     "Testing...": {
-         "es": "Pruebas...",
-         "sr": "тестирање..."
-     },
-     "Substitution: $[1]": {
-         "es": "Sustitución: $[1]",
-         "sr": "замена: $[1]"
-     },
-     "Hello World!!": {
+     "Group created successfully !!!": {
+         "en": "Group created successfully !!!",
          "es": "Hola Mundo!!",
          "sr": "Привет мир!!"
-     }
+     },
 
+     "Failed to create group !!!": {
+         "en": "Failed to create group !!!",
+         "es": "Ho ggh f la Mundo!!",
+         "sr": "Привет мир!!"
+     }
  }

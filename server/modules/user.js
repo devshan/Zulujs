@@ -1,16 +1,18 @@
 var base = require('../../zulu-lib/BaseModule');
 var Store = require('../../zulu-lib/Store');
+var Promise = require("bluebird");
 
 module.exports = {
 	
-	createGroup: function (data) {
+	createGroup: function (data, langObj) {
 		var store = new Store(meta.user.DATABASE);
-		store.create(meta.user['ENTITY GROUP'], data).then(function (result) {
-			console.log(result);
-		}).catch(function (error) {
-			console.log(error);
-		});
 
-		return base.success('aaa', data);
+		return new Promise(function (resolve, reject) {
+			store.create(meta.user['ENTITY GROUP'], data).then(function (result) {
+				resolve(base.success(langObj.translate('Group created successfully !!!'), result));
+			}).catch(function (error) {
+				reject(base.error(langObj.translate('Failed to create group !!!'), error));
+			});
+		});
 	}
 }

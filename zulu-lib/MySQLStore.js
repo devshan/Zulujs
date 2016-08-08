@@ -8,6 +8,8 @@ module.exports = {
 
 		var connection = mysql.createConnection(connectConfigs);
 		var tableName = meta.name.plural;
+		var primarykeyField = meta.primaryKey;
+
 		return new Promise(function (resolve, reject) {
 
 			var result = validator.validate('create', meta, data);
@@ -17,11 +19,18 @@ module.exports = {
 			}
 
 			connection.query('INSERT INTO ' + tableName + ' SET ?', data, function (err, result) {
-				connection.end();
 				if (err) {
 					reject(err);
 				} else {
-					resolve(result.insertId);
+					//fetch the created object and return
+					connection.query('SELECT * FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + result.insertId, function (error, createdObjs) {
+						connection.end();
+						if (error) {
+							reject(error);
+						} else {
+							resolve(createdObjs[0]);
+						}
+					});
 				}
 			});
 		});
@@ -86,7 +95,15 @@ module.exports = {
 				if (err) {
 					reject(err);
 				} else {
-					resolve(result.changedRows);
+					//fetch the created object and return
+					connection.query('SELECT * FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + data[primarykeyField], function (error, createdObjs) {
+						connection.end();
+						if (error) {
+							reject(error);
+						} else {
+							resolve(createdObjs[0]);
+						}
+					});
 				}
 			});
 		});

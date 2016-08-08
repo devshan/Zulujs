@@ -22,6 +22,7 @@ var allowedOrigins = '*';
 var headers = {};
 
 module.exports = {
+	
 	setup: function (app) {
 		//if cors not enabled, return
 		if (!enableCors) {
