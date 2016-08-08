@@ -5,8 +5,9 @@ MODULE:
 #---------------------db---------------------------------
 DATABASE:
     type: mysql
-    database: ZuluDB
+    database: TestDB
     user: root
+    host: localhost
     password: pass
 
 #---------------------action definitions-------------------------------------------------------
@@ -41,10 +42,6 @@ ACTION QUERY_GROUPS:
             type: string
             address: string
             parent: integer
-        sort:
-            by: [name, shortName, type, address]
-            order: [asc, desc]
-        include: [parent]
         pageSize: integer
         page: integer
 #----------------------------entity definitions--------------------------------------------------

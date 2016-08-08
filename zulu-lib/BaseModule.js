@@ -1,4 +1,4 @@
-var baseModule = function () {
+var BaseModule = function () {
 
 	/**
 	 * 
@@ -9,8 +9,8 @@ var baseModule = function () {
 		var filteredData = {};
 
 	 	for (var key in expectedInputs){
-		if (typeof data[key] == 'undefined')
-			continue;
+			if (typeof data[key] == 'undefined')
+				continue;
 			filteredData[key] = data[key];
 		}
 		return filteredData;
@@ -42,4 +42,4 @@ var baseModule = function () {
 	}
 }
 
-module.exports = baseModule;
+module.exports = new BaseModule();
