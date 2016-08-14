@@ -1,11 +1,25 @@
 var BaseModule = function () {
 
 	/**
-	 * 
+	 * Sample input:
+	 * {
+	 * 	var actionMeta = {
+         			     input: {   
+                      	 name: 'string',
+                      	 shortname: 'string'
+                  		 },
+          				 output: {
+          
+          				 }
+       					}
+ 			var data = {
+          				shortname: 'ppwoeirp'
+      					}
+		 };
 	 */
-	this.filter = function (action, data) {
+	this.filter = function (actionMeta, data) {
 	
-		var expectedInputs = action.input;
+		var expectedInputs = actionMeta.input;
 		var filteredData = {};
 
 	 	for (var key in expectedInputs){

@@ -6,8 +6,7 @@ var baseModule = require('../../zulu-lib/BaseModule');
 var SessionConfig = require('./SessionConfig');
 var Localize = require('localize');
 var langObj = new Localize('./translations/');
-var moduleRegistry = require('./ModuleRegistry');
-var AppDispatcher = require('../../zulu-lib/Dispatcher');
+var dispatcher = require('./Dispatcher');
 
 module.exports = {
 	
@@ -20,7 +19,7 @@ module.exports = {
 		global.meta = {};
 
 		//register module action events
-		moduleRegistry.register();
+		dispatcher.register();
 
 		//set session details
 		var sessionConfigs = SessionConfig.getSessionConfigs();

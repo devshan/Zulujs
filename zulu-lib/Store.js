@@ -22,24 +22,36 @@ var store = function(dbConnectionMeta) {
 
 	}
 
+	/*
+		inserting a record
+	 */
 	this.create = function (meta, data) {
 		this.setAdapter();
 		//TODO: validate data
 		return this.adapter.create(dbConnectionMeta, meta, data);
 	}
 
+	/*
+		deleting a record
+	 */
 	this.delete = function(meta, data) {
 		this.setAdapter();
 		//TODO: validate data
 		return this.adapter.delete(dbConnectionMeta, meta, data);
 	}
 
+	/*
+		updating a record
+	 */
 	this.update = function(meta, data) {
 		this.setAdapter();
 		//TODO: validate data
 		return this.adapter.update(dbConnectionMeta, meta, data);
 	}
 
+	/*
+		find a record
+	 */
 	this.query = function(meta, data) {
 		this.setAdapter();
 		//TODO: validate data

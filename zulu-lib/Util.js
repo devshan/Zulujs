@@ -1,4 +1,7 @@
 module.exports = {
+	/*
+		Type Casting function
+	 */
 	cast: function (value, type) {
 		switch(type) {
 		    case 'integer':

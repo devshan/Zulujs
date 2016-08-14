@@ -4,6 +4,26 @@ var validator = require("./Validator");
 
 module.exports = {
 
+	/**
+	   Sample input:
+	   {
+	  		var dbConnectionMeta = {
+				type: 'mysql',
+				database: 'TestDB',
+				host: 'localhost',
+				user: 'root',
+				password: 'pass'
+			};
+
+			var meta = { explained in the document};
+
+	  		var data = {
+ 				shortName: 'Madhushan',
+ 				address:'21/7A, U.E.Perera Mw, Rajagiriya',
+ 				parent:2	
+ 			};
+	   }
+	 */
 	create: function(connectConfigs, meta, data) {
 
 		var connection = mysql.createConnection(connectConfigs);
@@ -36,6 +56,24 @@ module.exports = {
 		});
 	},
 
+	/**
+	   Sample input:
+	   {
+	  		var dbConnectionMeta = {
+				type: 'mysql',
+				database: 'TestDB',
+				host: 'localhost',
+				user: 'root',
+				password: 'pass'
+			};
+
+			var meta = { explained in the document};
+
+	  		var data = {
+ 				groupID: 41
+ 			};
+	   }
+	 */
 	delete: function(connectConfigs, meta, data) {
 
 		var connection = mysql.createConnection(connectConfigs);
@@ -62,6 +100,27 @@ module.exports = {
 		});
 	},
 
+	/**
+	   Sample input:
+	   {
+	  		var dbConnectionMeta = {
+				type: 'mysql',
+				database: 'TestDB',
+				host: 'localhost',
+				user: 'root',
+				password: 'pass'
+			};
+
+			var meta = { explained in the document};
+
+	  		var data = {
+	  			groupID: 41
+ 				shortName: 'Madhushan',
+ 				address:'21/7A, U.E.Perera Mw, Rajagiriya',
+ 				parent:2	
+ 			};
+	   }
+	 */
 	update: function(connectConfigs, meta, data) {
 
 		var connection = mysql.createConnection(connectConfigs);

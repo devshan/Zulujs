@@ -23,6 +23,9 @@ var headers = {};
 
 module.exports = {
 	
+	/*
+	  Initialization of Cross Origin Resourse Sharing
+	 */
 	setup: function (app) {
 		//if cors not enabled, return
 		if (!enableCors) {

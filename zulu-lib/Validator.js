@@ -78,6 +78,9 @@ module.exports = {
 		return { error: false, msg: 'Ok' };
 	},
 
+	/*
+		Validation of the fields against the data in the yml file
+	 */
 	_validateField: function (fieldMeta, value, fieldName) {
 
 		var  validationMessage = '';
@@ -167,6 +170,9 @@ module.exports = {
 
 	},
 
+	/*
+		Valtdation of the lengths
+	 */
 	_validateLength: function (fieldMeta, value, fieldName) {
 
 		return { error: false, msg: 'Ok' };
