@@ -1,8 +1,9 @@
 var mysql = require('mysql');
 var Promise = require("bluebird");
 var validator = require("./Validator");
+var pools = {};
 
-module.exports = {
+var MySQLStore = function () {
 
 	/**
 	   Sample input:
@@ -10,6 +11,7 @@ module.exports = {
 	  		var dbConnectionMeta = {
 				type: 'mysql',
 				database: 'TestDB',
+				connectionLimit: 10,
 				host: 'localhost',
 				user: 'root',
 				password: 'pass'
@@ -24,9 +26,12 @@ module.exports = {
  			};
 	   }
 	 */
-	create: function(connectConfigs, meta, data) {
+	this.create = function(connectConfigs, meta, data) {
 
-		var connection = mysql.createConnection(connectConfigs);
+		if (!pools[connectConfigs.alias]) {
+			pools[connectConfigs.alias] = mysql.createPool(connectConfigs);
+		}
+
 		var tableName = meta.name.plural;
 		var primarykeyField = meta.primaryKey;
 
@@ -38,13 +43,12 @@ module.exports = {
 				return;
 			}
 
-			connection.query('INSERT INTO ' + tableName + ' SET ?', data, function (err, result) {
+			pools[connectConfigs.alias].query('INSERT INTO ' + tableName + ' SET ?', data, function (err, result) {
 				if (err) {
 					reject(err);
 				} else {
 					//fetch the created object and return
-					connection.query('SELECT * FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + result.insertId, function (error, createdObjs) {
-						connection.end();
+					pools[connectConfigs.alias].query('SELECT * FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + result.insertId, function (error, createdObjs) {
 						if (error) {
 							reject(error);
 						} else {
@@ -54,7 +58,7 @@ module.exports = {
 				}
 			});
 		});
-	},
+	}
 
 	/**
 	   Sample input:
@@ -74,9 +78,12 @@ module.exports = {
  			};
 	   }
 	 */
-	delete: function(connectConfigs, meta, data) {
+	this.delete = function(connectConfigs, meta, data) {
 
-		var connection = mysql.createConnection(connectConfigs);
+		if (!pools[connectConfigs.alias]) {
+			pools[connectConfigs.alias] = mysql.createPool(connectConfigs);
+		}
+
 		var tableName = meta.name.plural;
 		var primarykeyField = meta.primaryKey;
 		var primarykeyValue = data[primarykeyField];
@@ -89,8 +96,7 @@ module.exports = {
 				return;
 			}
 
-			connection.query('DELETE FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + primarykeyValue, function (err, result) {
-				connection.end();
+			pools[connectConfigs.alias].query('DELETE FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + primarykeyValue, function (err, result) {
 				if (err) {
 					reject(err);
 				} else {
@@ -98,7 +104,7 @@ module.exports = {
 				}
 			});
 		});
-	},
+	}
 
 	/**
 	   Sample input:
@@ -121,9 +127,12 @@ module.exports = {
  			};
 	   }
 	 */
-	update: function(connectConfigs, meta, data) {
+	this.update = function(connectConfigs, meta, data) {
 
-		var connection = mysql.createConnection(connectConfigs);
+		if (!pools[connectConfigs.alias]) {
+			pools[connectConfigs.alias] = mysql.createPool(connectConfigs);
+		}
+
 		var tableName = meta.name.plural;
 		var primarykeyField = meta.primaryKey;
 		var fields = '';
@@ -149,14 +158,12 @@ module.exports = {
 				return;
 			}
 
-			connection.query(queryString, paramValues, function (err, result) {
-				connection.end();
+			pools[connectConfigs.alias].query(queryString, paramValues, function (err, result) {
 				if (err) {
 					reject(err);
 				} else {
 					//fetch the created object and return
-					connection.query('SELECT * FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + data[primarykeyField], function (error, createdObjs) {
-						connection.end();
+					pools[connectConfigs.alias].query('SELECT * FROM ' + tableName + ' WHERE ' + primarykeyField + '=' + data[primarykeyField], function (error, createdObjs) {
 						if (error) {
 							reject(error);
 						} else {
@@ -168,3 +175,5 @@ module.exports = {
 		});
 	}
 }
+
+module.exports = new MySQLStore();

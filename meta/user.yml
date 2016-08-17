@@ -9,6 +9,8 @@ DATABASE:
     user: root
     host: localhost
     password: pass
+    connectionLimit: 10
+    alias: user
 
 #---------------------action definitions-------------------------------------------------------
 

@@ -16,13 +16,5 @@ module.exports = {
 				reject(base.error(langObj.translate('Failed to create group !!!'), error));
 			});
 		});
-	},
-
-	CREATE_GROUPS: function (data, langObj) {
-		return new Promise(function (resolve, reject) {
-			logger.info('hi');
-			resolve('hello');
-		});
 	}
-
 };
